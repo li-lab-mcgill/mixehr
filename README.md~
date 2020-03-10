@@ -22,7 +22,7 @@ stateCnt: indicate the number of states for the phenotype. This is designed for 
 
 See the example file ‘mixmimic/mimic_meta.txt’ in the folder.
 
-The actual EHR data file (mixmimic/mimic_trainData.txt) has 5 columns rows:
+The actual EHR data file (mimic_trainData.txt) has 5 columns rows:
 
 Patient ID
 typeId (concurring the meta file above)
