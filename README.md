@@ -29,21 +29,21 @@ See scripts mixmimic.sh for training on MIMIC data
 
 We included the MIMIC-III data. To run mixehr, you will need a meta data file that contains 3 columns: 
 
-typeId: indicates distinct data types such as ICD-9, lab test, etc with 1, 2, etc
-pheId: indicate the phenotype ID (e.g., lab test 1, lab test 2, etc)
-stateCnt: indicate the number of states for the phenotype. This is designed for lab test at the moment, but will work for other data types with discrete states.
+1. typeId: indicates distinct data types such as ICD-9, lab test, etc with 1, 2, etc
+2. pheId: indicate the phenotype ID (e.g., lab test 1, lab test 2, etc)
+3. stateCnt: indicate the number of states for the phenotype. This is designed for lab test at the moment, but will work for other data types with discrete states.
 
 See the example file ‘mixmimic/mimic_meta.txt’ in the folder.
 
 The actual EHR data file (mixmimic/mimic_trainData.txt) has 5 columns rows:
 
-Patient ID
-typeId (concurring the meta file above)
-pheId (concurring the meta file above)
-stateId (zero-based, and set to 1 for binary feature and starting 0 onwards for discrete lab values)
-freq (number of times observed at least 1)
+1. Patient ID
+2. typeId (concurring the meta file above)
+3. pheId (concurring the meta file above)
+4. stateId (zero-based, and set to 1 for binary feature and starting 0 onwards for discrete lab values)
+5. freq (number of times observed at least 1)
 
-NOTE: All IDs must be incremental and start from 1. That is no skipping number. 
+NOTE: stateId must be incremental and start from 0. That is no skipping number. 
 
 ## Training and validation
 The main training command:
