@@ -1,6 +1,6 @@
-MixEHR
+# MixEHR
 
-MixEHR is a Unix-style command-line tool. You can compile it on a unix machine. 
+# MixEHR is a Unix-style command-line tool. You can compile it on a unix machine. 
 
 **Multi-modal topic model for mining EHR data** 
 ![mixehr](images/mixehr_overview.png "MixEHR model overview.")
