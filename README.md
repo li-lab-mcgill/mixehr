@@ -1,6 +1,13 @@
-INSTALLATION:
+MixEHR
 
 MixEHR is a Unix-style command-line tool. You can compile it on a unix machine. 
+
+**Multi-modal topic model for mining EHR data** 
+![mixehr](https://github.com/li-lab-mcgill/mixehr/images/mixehr_overview.png "MixEHR model overview.")
+
+
+INSTALLATION:
+
 
 To install MixEHR, you will need to first install armadillo (http://arma.sourceforge.net)
 
