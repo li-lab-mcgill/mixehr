@@ -2,7 +2,8 @@
 
 
 **Multi-modal topic model for mining EHR data** 
-![mixehr](images/mixehr_overview.png "a. Multi-view matrix factorization of multiple data matrices corresponding to different EHR data types including lab tests, billing code, doctor notes, etc. b. Proposed Bayesian model for modeling non-missing at random (NMAR) lab tests and other multimodal data. In order to achieve tractable inference, we assign a latent topic $h_{lj}$ to the lab results $y_{lj}$ and missing indicator ($r_{lj}$) such that they become conditionally independent. c. Collapsed variational Bayesian inference of the MixEHR model. The inference and learning can be visualized as marginalizing a 3-dimensional tensor that represents the expectations of the latent variables.")
+![mixehr](images/mixehr_overview.png)
+**MixEHR model overview**. **a.** Multi-view matrix factorization of multiple data matrices corresponding to different EHR data types including lab tests, billing code, doctor notes, etc. **b.** Proposed Bayesian model for modeling non-missing at random (NMAR) lab tests and other multimodal data. In order to achieve tractable inference, we assign a latent topic h_lj to the lab results y_lj and missing indicator (r_lj) such that they become conditionally independent. **c.** Collapsed variational Bayesian inference of the MixEHR model. The inference and learning can be visualized as marginalizing a 3-dimensional tensor that represents the expectations of the latent variables.
 
 
 MixEHR is a Unix-style command-line tool. You can compile it on a unix machine. 
