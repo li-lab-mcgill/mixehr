@@ -166,7 +166,7 @@ After training MixEHR for `k` topics and then inferring the topic mixtures for s
 ```
 import pickle as pkl
 from keras.models import Sequential
-from keras.layers import Dense, Activation
+from keras.layers import GRU, Dense, Activation
 
 train_set_x = pkl.load(open("/path/to/downloaded/train_set_x.pkl","rb"))
 train_set_y = pkl.load(open("/path/to/downloaded/train_set_y.pkl","rb"))
