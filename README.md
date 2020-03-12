@@ -89,7 +89,7 @@ A heatmap of these features can then be plotted whose intensity is given by the 
 
 
 ## Application 2: Retrospective Prediction of EHR code:
-![heatmap](images/ehr_code_prediction.png)
+![retro_code_prediction](images/ehr_code_prediction.png)
 
 To impute missing data in an individual-specific way, we here describe a k-nearest neighbour approach. The prediction can be divided into 3 steps:
 
@@ -104,7 +104,7 @@ TO-DO: example
 
 
 ## Application 3: Imputing missing lab results:
-![heatmap](images/lab_imputation.png)
+![lab_imputation](images/lab_imputation.png)
 
 **Workflow to impute lab results.** This is similar to the retrospective EHR code prediction. **Step 1.** We modeled lab tests, lab test results and non-lab EHR data (i.e., ICD, notes, prescription, treatment) to infer the patient topic mixture. **Step 2.** For a test patient, we masked each of his observed lab test result t and inferred his topic mixture. **Step 3.** We then found k=25 (by default) patients who have the lab test results $t$ observed and exhibit the most similar topic mixture to the test patient. We then took the average of lab result values over the k patients as the prediction of the lab result value for the test patient j'. Steps 1-3 were repeated to evaluate every observed lab test in every test patient.
 
@@ -112,7 +112,7 @@ TO-DO: code example
 
 
 ## Application 4: Prediction of longitudinal EHR code:
-![heatmap](images/code_prediction.png)
+![code_prediction](images/code_prediction.png)
 
 To predict dynamic or longitudinal EHR code, we describe a novel pipeline that combines MixEHR topics with recurrent neural network (RNN) with Gated Recurrent Unit (GRU). We first trained MixEHR on the EHR data for 39,000 patients with single-admission in MIMIC-III. We then used the trained MixEHR to infer topic mixture at each admission for the 7541 patients with multiple admissions. Then we used as input the inferred topic mixture at the current admission (say at time t) to the RNN to autoregressively predict the diagnostic codes at the next admission at time t+1. Here \mxr~uses all of the data types from MIMIC-III. More details on the architecture of the neural networks are described in our paper (under peer review).
 
