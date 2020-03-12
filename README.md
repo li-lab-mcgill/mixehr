@@ -96,11 +96,11 @@ A heatmap of these features can then be plotted whose intensity is given by the 
 To impute missing data in an individual-specific way, we here describe a k-nearest neighbour approach. The prediction can be divided into 3 steps:
 
 1. Train MixEHR on training set to learn the EHR-code by disease topic matrices **W** across data types and infer the disease topic mixtures $\theta^{train}$ for each training patient data point;
-2. To infer the probability of an unknown EHR code $t$ for a test patient $j'$, use MixEHR and the learnt disease topic matrices **W** to infer the disease topic mixture <img src="https://render.githubusercontent.com/render/math?math=\theta_{j'}=-1"> for the test patient;
+2. To infer the probability of an unknown EHR code $t$ for a test patient $j'$, use MixEHR and the learnt disease topic matrices **W** to infer the disease topic mixture <img src="https://render.githubusercontent.com/render/math?math=\theta_{j'}=-1"> for the test patient; 
 
-3. Compare the test patient disease topic mixture $\theta_{j'}$ with the training patient disease mixtures $\theta^{train}$ to find the $k$ most similar training patients $\mathcal{S}_{j'}$. Here the patient-patient similarity matrix is calculated based on the Euclidean distance between their disease topic mixtures:
+3. Compare the test patient disease topic mixture ![formula](https://render.githubusercontent.com/render/math?math=\theta_{j'}) with the training patient disease mixtures ![formula](https://render.githubusercontent.com/render/math?math=\theta^{train}) to find the $k$ most similar training patients ![formula](https://render.githubusercontent.com/render/math?math=\mathcal{S}_{j'}). Here the patient-patient similarity matrix is calculated based on the Euclidean distance between their disease topic mixtures:
 
-Finally, we take the average of the EHR code t over these k-nearest neighbour patients as the prediction for the target code $t$ for test patient j'. We empirically determined the number of nearest neighbours $k$ to be 100.
+Finally, we take the average of the EHR code t over these k-nearest neighbour patients as the prediction for the target code `t` for test patient `j'`. We empirically determined the number of nearest neighbours `k` to be 100.
 
 Please download and unzip this file: 
 
@@ -120,7 +120,7 @@ Then run the following command:
 ## Application 3: Imputing missing lab results:
 ![lab_imputation](images/lab_imputation.png)
 
-**Workflow to impute lab results.** This is similar to the retrospective EHR code prediction. **Step 1.** We modeled lab tests, lab test results and non-lab EHR data (i.e., ICD, notes, prescription, treatment) to infer the patient topic mixture. **Step 2.** For a test patient, we masked each of his observed lab test result t and inferred his topic mixture. **Step 3.** We then found k=25 (by default) patients who have the lab test results $t$ observed and exhibit the most similar topic mixture to the test patient. We then took the average of lab result values over the k patients as the prediction of the lab result value for the test patient j'. Steps 1-3 were repeated to evaluate every observed lab test in every test patient.
+**Workflow to impute lab results.** This is similar to the retrospective EHR code prediction. **Step 1.** We modeled lab tests, lab test results and non-lab EHR data (i.e., ICD, notes, prescription, treatment) to infer the patient topic mixture. **Step 2.** For a test patient, we masked each of his observed lab test result t and inferred his topic mixture. **Step 3.** We then found k=25 (by default) patients who have the lab test results `t` observed and exhibit the most similar topic mixture to the test patient. We then took the average of lab result values over the k patients as the prediction of the lab result value for the test patient j'. Steps 1-3 were repeated to evaluate every observed lab test in every test patient.
 
 Please download and unzip this file: 
 
