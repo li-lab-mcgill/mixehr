@@ -161,37 +161,22 @@ The predictions are saved in files `target_lab_res_pred.csv` under directory `mi
 
 To predict dynamic or longitudinal EHR code, we describe a novel pipeline that combines MixEHR topics with recurrent neural network (RNN) with Gated Recurrent Unit (GRU). We first trained MixEHR on the EHR data for 39,000 patients with single-admission in MIMIC-III. We then used the trained MixEHR to infer topic mixture at each admission for the 7541 patients with multiple admissions. Then we used as input the inferred topic mixture at the current admission (say at time `t`) to the RNN to autoregressively predict the diagnostic codes at the next admission at time `t+1`. Here MixEHR uses all of the data types from MIMIC-III. More details on the architecture of the neural networks are described in our paper (under peer review). The lines of code given below may be followed to use the inferred MixEHR mixtures for longitudinal EHR code prediction using an RNN.
 
-After training MixEHR for `k` topics and then inferring the topic mixtures for some test data, this test data can be further split into train (for RNN) and test (for RNN). 
+After training MixEHR for `k` topics and then inferring the topic mixtures for some test data, this test data can be further split into train (for RNN) and test (for RNN). Since we wish to do longitudinal EHR code prediction, we need to obtain the topic mixtures for all admissions for each patient. In order to do so, we need to merge the topic mixtures (reqd_topics) with the patient_ids (reqd_pat_id) and we need to group the topic mixtures by SUBJECT_ID. This can then be split into `train_set_x` and `test_set_x`. The corresponding labels are split into `train_set_y` and `test_set_y`. Since patients have different number of admissions, these datasets are then padded for uniformity. The processed files are available as pickled files in the data download link.
 
 ```
-import pandas as pd
-import numpy as np
+import pickle as pkl
 from keras.models import Sequential
 from keras.layers import Dense, Activation
 
-# getting the topic information for the admissions & patients
-reqd_topics = pd.read_csv("path/to/your/inferred/topic/mixtures",header=None)
-# normalize the topics
-reqd_topics = pd.DataFrame(normalize(reqd_topics, norm='l1',axis=1))
+train_set_x = pkl.load(open("/path/to/downloaded/train_set_x.pkl","rb"))
+train_set_y = pkl.load(open("/path/to/downloaded/train_set_y.pkl","rb"))
 
-# this information is mainly used to obtain mortality labels from the MIMIC-III ADMISSIONS.csv file
-reqd_pat_id = pd.read_csv("path/to/subject_ids/of/inferred/topic/mixtures",header=None) 
-
-# since we wish to do longitudinal EHR code prediction, 
-# we need to obtain the topic mixtures for all admissions 
-# for each patient. In order to do so, we need to 
-# merge the topic mixtures (reqd_topics) with the patient_ids (reqd_pat_id) 
-# and we need to group the topic mixtures by SUBJECT_ID. 
-# This can then be split into train_set_x and test_set_x. 
-# The corresponding labels are split into train_set_y and test_set_y.
+test_set_x = pkl.load(open("/path/to/downloaded/test_set_x.pkl","rb"))
+test_set_y = pkl.load(open("/path/to/downloaded/test_set_y.pkl","rb"))
 
 batchsize = 64
 n_batches = int(np.ceil(float(len(train_set_x)) / float(batchsize)))
 max_epochs = 70
-
-# since all patients do not have the same number of visits,
-# the training data sets need to be padded with zeros for uniformity in shape. 
-X, y = padMatrix(train_set_x, train_set_y)
 
 # RNN code - 2 layer GRU
 model = Sequential()
@@ -211,10 +196,6 @@ plt.title('Loss')
 plt.plot(history.history['loss'], label='train')
 plt.plot(history.history['val_loss'], label='validation')
 plt.legend()
-
-
-# the test sets also need to be padded
-x_test, y_test = padMatrix(test_set_x, test_set_y)
 
 # obtain the prediction probabilities of the model
 pred_test = model.predict_proba(x_test)
