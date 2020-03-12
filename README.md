@@ -123,7 +123,7 @@ Then run the following command:
 
 Please download and unzip this file: 
 
-Here the mimic_data_train_pat_mix_50.csv that can be generated from using above approach described in **Infer new patient mixture**. The mimic_data_train_JCVB0_nmar_K50_iter1000*.csv are the trained model parameters that can be generated from **Training and validation** section.
+Here the `mimic_data_train_pat_mix_50.csv` that can be generated from using above approach described in **Infer new patient mixture**. The `mimic_data_train_JCVB0_nmar_K50_iter1000*.csv` are the trained model parameters that can be generated from **Training and validation** section.
 
 Then run the following command:
 
