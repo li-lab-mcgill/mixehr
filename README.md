@@ -100,7 +100,7 @@ To impute missing data in an individual-specific way, we here describe a k-neare
 
 3. Compare the test patient disease topic mixture <img src="https://render.githubusercontent.com/render/math?math=\theta_{j'}"> with the training patient disease mixtures <img src="https://render.githubusercontent.com/render/math?math=\theta^{train}"> to find the k most similar training patients <img src="https://render.githubusercontent.com/render/math?math=\mathcal{S}_{j'}">. Here the patient-patient similarity matrix is calculated based on the Euclidean distance between their disease topic mixtures:
 
-Finally, we take the average of the EHR code t over these k-nearest neighbour patients as the prediction for the target code $t$ for test patient j'. We empirically determined the number of nearest neighbours $k$ to be 100.
+Finally, we take the average of the EHR code t over these k-nearest neighbour patients as the prediction for the target code t for test patient j'. We empirically determined the number of nearest neighbours k to be 100.
 
 Please download and unzip this file: 
 
