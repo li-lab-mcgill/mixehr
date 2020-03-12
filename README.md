@@ -101,8 +101,19 @@ To impute missing data in an individual-specific way, we here describe a k-neare
 
 Finally, we take the average of the EHR code t over these k-nearest neighbour patients as the prediction for the target code $t$ for test patient j'. We empirically determined the number of nearest neighbours $k$ to be 100.
 
+Please download and unzip this file: 
 
-TO-DO: example
+Then run the following command:
+
+```
+./mixehr --metaFile metainfo.txt --topics 75 \
+		--trainDataFile train${i}.txt \
+        --imputeTargetsFile impute_target_pheId.txt \
+        --imputePatDataFile test_data.txt \
+        --knn_impute 25 \
+        --output_dir impute_data \
+        --trainedModelPrefix train${i}_JCVB0_nmar_K75_iter200
+```
 
 
 ## Application 3: Imputing missing lab results:
