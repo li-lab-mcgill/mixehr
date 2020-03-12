@@ -2,7 +2,7 @@
 
  
 ![mixehr](images/mixehr_overview.png)
-**MixEHR model overview**. **a.** Multi-view matrix factorization of multiple data matrices corresponding to different EHR data types including lab tests, billing code, doctor notes, etc. **b.** Proposed Bayesian model for modeling non-missing at random (NMAR) lab tests and other multimodal data. In order to achieve tractable inference, we assign a latent topic h_lj to the lab results y_lj and missing indicator (r_lj) such that they become conditionally independent. **c.** Collapsed variational Bayesian inference of the MixEHR model. The inference and learning can be visualized as marginalizing a 3-dimensional tensor that represents the expectations of the latent variables.
+**MixEHR model overview**. **a.** Multi-view matrix factorization of multiple data matrices corresponding to different EHR data types including lab tests, billing code, doctor notes, etc. **b.** Proposed Bayesian model for modeling non-missing at random (NMAR) lab tests and other multimodal data. In order to achieve tractable inference, we assign a latent topic ![formula](https://render.githubusercontent.com/render/math?math=h_{lj}) to the lab results ![formula](https://render.githubusercontent.com/render/math?math=y_{lj}) and missing indicator (![formula](https://render.githubusercontent.com/render/math?math=r_{lj})) such that they become conditionally independent. **c.** Collapsed variational Bayesian inference of the MixEHR model. The inference and learning can be visualized as marginalizing a 3-dimensional tensor that represents the expectations of the latent variables.
 
 
 MixEHR is a Unix-style command-line tool. You can compile it on a unix machine. 
@@ -25,7 +25,7 @@ This should output:
 ./mixehr -f examples/toydata.txt -m1 examples/toymeta_phe.txt -i 10 -k 10
 ```
 
-See scripts mixmimic.sh for training on MIMIC data
+See scripts [mixmimic.sh](mixmimic.sh) for training on MIMIC data
 
 We included the MIMIC-III data. To run mixehr, you will need a meta data file that contains 3 columns: 
 
@@ -33,9 +33,9 @@ We included the MIMIC-III data. To run mixehr, you will need a meta data file th
 2. pheId: indicate the phenotype ID (e.g., lab test 1, lab test 2, etc)
 3. stateCnt: indicate the number of states for the phenotype. This is designed for lab test at the moment, but will work for other data types with discrete states.
 
-See the example file ‘mixmimic/mimic_meta.txt’ in the folder.
+See the example file [mixmimic/mimic_meta.tx](mixmimic/mimic_meta.txt)’ in the folder.
 
-The actual EHR data file (mixmimic/mimic_trainData.txt) has 5 columns rows:
+The actual EHR data file [mixmimic/mimic_trainData.txt](mixmimic/mimic_trainData.txt) has 5 columns rows:
 
 1. Patient ID
 2. typeId (concurring the meta file above)
@@ -63,13 +63,13 @@ Flags are:
 --maxcores: maximum number of CPU cores to use
 --outputIntermediates: (whether output intermediate learned parameters for inspection)
 
-If you have a test data for producing predictive likelihood, then you can run the same command with added flag '-t $testdata', where the test data contain the same format as the training data but contain one extra column in the end indicating whether the feature is missing (0) or observed (1). See mixmimic_sim folder for the simulated data as examples.
+If you have a test data for producing predictive likelihood, then you can run the same command with added flag '-t $testdata', where the test data contain the same format as the training data but contain one extra column in the end indicating whether the feature is missing (0) or observed (1). See [mixmimic_sim](mixmimic_sim) folder for the simulated data as examples.
 
 
 ## Infer new patient mixture
-See mixmimic_testpat.sh
+See [mixmimic_testpat.sh](mixmimic_testpat.sh)
 
-After you train the model, you will find a CSV file mimic_trainData_JCVB0_iter500_phi_normalized. The first two columns are typeId and pheId (concurring the IDs in the above meta file mimic_meta.txt). The rest of the columns are normalized probabilities for the membership of each phenotype. Similar phenotypes tend to exhibit high probabilities under the same column (i.e., meta-phenotype). mimic_trainData_JCVB0_iter500_eta_normalized is similar but with the first 3 columns, indicating typeId, labId, stateId and the rest are K columns probabilities.
+After you train the model, you will find a CSV file `mimic_trainData_JCVB0_iter500_phi_normalized`. The first two columns are typeId and pheId (concurring the IDs in the above meta file [mixmimic/mimic_meta.txt](mixmimic/mimic_meta.txt)). The rest of the columns are normalized probabilities for the membership of each phenotype. Similar phenotypes tend to exhibit high probabilities under the same column (i.e., meta-phenotype). `mimic_trainData_JCVB0_iter500_eta_normalized` is similar but with the first 3 columns, indicating typeId, labId, stateId and the rest are K columns probabilities.
 
 
 Command to infer disease mixture of new patients:
@@ -95,12 +95,20 @@ A heatmap of these features can then be plotted whose intensity is given by the 
 
 To impute missing data in an individual-specific way, we here describe a k-nearest neighbour approach. The prediction can be divided into 3 steps:
 
-1. Train MixEHR on training set to learn the EHR-code by disease topic matrices **W** across data types and infer the disease topic mixtures $\theta^{train}$ for each training patient data point;
-2. To infer the probability of an unknown EHR code $t$ for a test patient $j'$, use MixEHR and the learnt disease topic matrices **W** to infer the disease topic mixture <img src="https://render.githubusercontent.com/render/math?math=\theta_{j'}=-1"> for the test patient; 
+1. Train MixEHR on training set to learn the EHR-code by disease topic matrices **W** across data types and infer the disease topic mixtures ![formula](https://render.githubusercontent.com/render/math?math=\theta^{train}) for each training patient data point;
+<<<<<<< HEAD
+2. To infer the probability of an unknown EHR code `t` for a test patient `j'`, use MixEHR and the learnt disease topic matrices **W** to infer the disease topic mixture <img src="https://render.githubusercontent.com/render/math?math=\theta_{j'}=-1"> for the test patient; 
 
 3. Compare the test patient disease topic mixture ![formula](https://render.githubusercontent.com/render/math?math=\theta_{j'}) with the training patient disease mixtures ![formula](https://render.githubusercontent.com/render/math?math=\theta^{train}) to find the $k$ most similar training patients ![formula](https://render.githubusercontent.com/render/math?math=\mathcal{S}_{j'}). Here the patient-patient similarity matrix is calculated based on the Euclidean distance between their disease topic mixtures:
 
 Finally, we take the average of the EHR code t over these k-nearest neighbour patients as the prediction for the target code `t` for test patient `j'`. We empirically determined the number of nearest neighbours `k` to be 100.
+=======
+2. To infer the probability of an unknown EHR code `t` for a test patient `j'`, use MixEHR and the learnt disease topic matrices **W** to infer the disease topic mixture <img src="https://render.githubusercontent.com/render/math?math=\theta_{j'}"> for the test patient;
+
+3. Compare the test patient disease topic mixture <img src="https://render.githubusercontent.com/render/math?math=\theta_{j'}"> with the training patient disease mixtures <img src="https://render.githubusercontent.com/render/math?math=\theta^{train}"> to find the k most similar training patients <img src="https://render.githubusercontent.com/render/math?math=\mathcal{S}_{j'}">. Here the patient-patient similarity matrix is calculated based on the Euclidean distance between their disease topic mixtures:
+
+Finally, we take the average of the EHR code t over these k-nearest neighbour patients as the prediction for the target code t for test patient `j'`. We empirically determined the number of nearest neighbours `k` to be 100.
+>>>>>>> 088e13e27b9df5ff21e351df6f9203fed00135a3
 
 Please download and unzip this file: 
 
@@ -116,11 +124,19 @@ Then run the following command:
 	--trainedModelPrefix train${i}_JCVB0_nmar_K75_iter200
 ```
 
+The predictions are saved in files `target_phe_pred.csv` under directory `impute_data`. Rows are admissions or patients and columns are EHR code.
 
 ## Application 3: Imputing missing lab results:
 ![lab_imputation](images/lab_imputation.png)
 
+<<<<<<< HEAD
 **Workflow to impute lab results.** This is similar to the retrospective EHR code prediction. **Step 1.** We modeled lab tests, lab test results and non-lab EHR data (i.e., ICD, notes, prescription, treatment) to infer the patient topic mixture. **Step 2.** For a test patient, we masked each of his observed lab test result t and inferred his topic mixture. **Step 3.** We then found k=25 (by default) patients who have the lab test results `t` observed and exhibit the most similar topic mixture to the test patient. We then took the average of lab result values over the k patients as the prediction of the lab result value for the test patient j'. Steps 1-3 were repeated to evaluate every observed lab test in every test patient.
+=======
+This is similar to the retrospective EHR code prediction. 
+- **Step 1.** We modeled lab tests, lab test results and non-lab EHR data (i.e., ICD, notes, prescription, treatment) to infer the patient topic mixture. 
+- **Step 2.** For a test patient, we masked each of his observed lab test result t and inferred his topic mixture. 
+- **Step 3.** We then found k=25 (by default) patients who have the lab test results $t$ observed and exhibit the most similar topic mixture to the test patient. We then took the average of lab result values over the k patients as the prediction of the lab result value for the test patient j'. Steps 1-3 were repeated to evaluate every observed lab test in every test patient.
+>>>>>>> 088e13e27b9df5ff21e351df6f9203fed00135a3
 
 Please download and unzip this file: 
 
