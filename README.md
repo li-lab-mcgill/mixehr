@@ -105,7 +105,7 @@ To impute missing data in an individual-specific way, we here describe a k-neare
 Finally, we take the average of the EHR code t over these k-nearest neighbour patients as the prediction for the target code t for test patient `j'`. We empirically determined the number of nearest neighbours `k` to be 100.
 
 
-Please download and unzip this file: 
+Please download and unzip this file: https://drive.google.com/file/d/1i6FxKSOaagiR0MXMhiHkQtIoyab3eBVE/view?usp=sharing
 
 Then run the following command:
 
