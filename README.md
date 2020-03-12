@@ -116,11 +116,15 @@ Then run the following command:
 	--trainedModelPrefix train${i}_JCVB0_nmar_K75_iter200
 ```
 
+The predictions are saved in files `target_phe_pred.csv` under directory `impute_data`. Rows are admissions or patients and columns are EHR code.
 
 ## Application 3: Imputing missing lab results:
 ![lab_imputation](images/lab_imputation.png)
 
-**Workflow to impute lab results.** This is similar to the retrospective EHR code prediction. **Step 1.** We modeled lab tests, lab test results and non-lab EHR data (i.e., ICD, notes, prescription, treatment) to infer the patient topic mixture. **Step 2.** For a test patient, we masked each of his observed lab test result t and inferred his topic mixture. **Step 3.** We then found k=25 (by default) patients who have the lab test results $t$ observed and exhibit the most similar topic mixture to the test patient. We then took the average of lab result values over the k patients as the prediction of the lab result value for the test patient j'. Steps 1-3 were repeated to evaluate every observed lab test in every test patient.
+This is similar to the retrospective EHR code prediction. 
+- **Step 1.** We modeled lab tests, lab test results and non-lab EHR data (i.e., ICD, notes, prescription, treatment) to infer the patient topic mixture. 
+- **Step 2.** For a test patient, we masked each of his observed lab test result t and inferred his topic mixture. 
+- **Step 3.** We then found k=25 (by default) patients who have the lab test results $t$ observed and exhibit the most similar topic mixture to the test patient. We then took the average of lab result values over the k patients as the prediction of the lab result value for the test patient j'. Steps 1-3 were repeated to evaluate every observed lab test in every test patient.
 
 Please download and unzip this file: 
 
