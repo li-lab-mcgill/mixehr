@@ -176,7 +176,8 @@ reqd_topics = pd.DataFrame(normalize(reqd_topics, norm='l1',axis=1))
 # this information is mainly used to obtain mortality labels from the MIMIC-III ADMISSIONS.csv file
 reqd_pat_id = pd.read_csv("path/to/subject_ids/of/inferred/topic/mixtures",header=None) 
 
-# since we wish to do longitudinal EHR code prediction, we need to obtain the topic mixtures for all admissions 
+# since we wish to do longitudinal EHR code prediction, 
+# we need to obtain the topic mixtures for all admissions 
 # for each patient. In order to do so, we need to 
 # merge the topic mixtures (reqd_topics) with the patient_ids (reqd_pat_id) 
 # and we need to group the topic mixtures by SUBJECT_ID. 
@@ -187,7 +188,8 @@ batchsize = 64
 n_batches = int(np.ceil(float(len(train_set_x)) / float(batchsize)))
 max_epochs = 70
 
-# since all patients do not have the same number of visits, the training data sets need to be padded with zeros for uniformity in shape. 
+# since all patients do not have the same number of visits,
+# the training data sets need to be padded with zeros for uniformity in shape. 
 X, y = padMatrix(train_set_x, train_set_y)
 
 # RNN code - 2 layer GRU
