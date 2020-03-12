@@ -107,8 +107,8 @@ Then run the following command:
 
 ```
 ./mixehr --metaFile metainfo.txt --topics 75 \
-		--trainDataFile train${i}.txt \
-        --imputeTargetsFile impute_target_pheId.txt \
+	--trainDataFile train${i}.txt \
+		--imputeTargetsFile impute_target_pheId.txt \
         --imputePatDataFile test_data.txt \
         --knn_impute 25 \
         --output_dir impute_data \
