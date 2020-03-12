@@ -1,4 +1,4 @@
-# MixEHR: Multi-modal topic model for mining EHR data
+# MixEHR: Multi-modal Mixture Topic Model for mining EHR data
 
  
 ![mixehr](images/mixehr_overview.png)
@@ -84,3 +84,35 @@ These inferred disease mixtures can then be used as patient representations to t
 One way to interpret the mortality prediction results and the topic mixtures is to calculate the correlation between the mortaltiy labels and each of the topics. The topics most positively and negatively correlated with mortality can be visualized as heat maps. To do so, we make use of the file with the suffix  `_phi_normalised.csv` that is obtained after training MixEHR. This file contains an N by K matrix file which is the normalized probabilities (column sum is one) for N features for K meta-phenotypes (topics). For each of the K topics, the top features can be obtained from the feature IDs given in [mixmimic/ehrFeatId.Rdata](mixmimic/ehrFeatId.RData). A heatmap of these features can then be plotted whose intensity is given by the probability values. Below is an example of the top 5 EHR codes (features) associated with the top 3 topics positively correlated and the bottom 3 topics negatively correlated with mortality indicated by blue and green respectively. The categories of the features are indicated by the colour map presented beside the heatmap. The intensity of the red colour indicates the probability of a particular feature belonging to a particular topic. 
 
 ![heatmap](images/heatmap.png)
+
+
+
+## Application 1: Retrospective Prediction of EHR code:
+TO-DO
+
+## Application 2: Prediction of longitudinal EHR code:
+TO-DO
+
+
+
+## Application 3: Prediction a phenotype of interest using patient topic mixture memberships:
+
+
+
+## Application 4: Imputing missing lab results:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
