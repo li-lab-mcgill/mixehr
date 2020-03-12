@@ -108,7 +108,24 @@ TO-DO: example
 
 **Workflow to impute lab results.** This is similar to the retrospective EHR code prediction. **Step 1.** We modeled lab tests, lab test results and non-lab EHR data (i.e., ICD, notes, prescription, treatment) to infer the patient topic mixture. **Step 2.** For a test patient, we masked each of his observed lab test result t and inferred his topic mixture. **Step 3.** We then found k=25 (by default) patients who have the lab test results $t$ observed and exhibit the most similar topic mixture to the test patient. We then took the average of lab result values over the k patients as the prediction of the lab result value for the test patient j'. Steps 1-3 were repeated to evaluate every observed lab test in every test patient.
 
-TO-DO: code example
+Please download and unzip this file: 
+
+Then run the following command
+
+```
+k=50
+iter=1000
+
+./mixehr --metaFile lab_imputation/mimic_meta.txt --topics $k \
+        --trainDataFile lab_imputation/mimic_data_train.txt \
+        --imputeTargetsFile lab_imputation/impute_target_labId.txt \
+        --imputePatDataFile lab_imputation/mimic_data_test.txt \
+        --trainPatMetapheFile lab_imputation/mimic_data_train_pat_mix_${k}.csv \
+        --trainPatIdFile lab_imputation/mimic_data_train_pat_mix_${k}_patId.csv \
+        --knn_impute 25 \
+        --output_dir lab_imputation/mimic_data_test_pat_impute_lab_K${k} \
+        --trainedModelPrefix lab_imputation/mimic_data_train_JCVB0_nmar_K${k}_iter$iter
+```        
 
 
 ## Application 4: Prediction of longitudinal EHR code:
