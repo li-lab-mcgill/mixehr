@@ -90,6 +90,7 @@ A heatmap of these features can then be plotted whose intensity is given by the 
 
 ## Application 2: Retrospective Prediction of EHR code:
 ![heatmap](images/ehr_code_prediction.png)
+
 To impute missing data in an individual-specific way, we here describe a k-nearest neighbour approach. The prediction can be divided into 3 steps:
 
 1. Train MixEHR on training set to learn the EHR-code by disease topic matrices **W** across data types and infer the disease topic mixtures $\theta^{train}$ for each training patient data point;
@@ -104,6 +105,7 @@ TO-DO: example
 
 ## Application 3: Imputing missing lab results:
 ![heatmap](images/lab_imputation.png)
+
 **Workflow to impute lab results.** This is similar to the retrospective EHR code prediction. **Step 1.** We modeled lab tests, lab test results and non-lab EHR data (i.e., ICD, notes, prescription, treatment) to infer the patient topic mixture. **Step 2.** For a test patient, we masked each of his observed lab test result t and inferred his topic mixture. **Step 3.** We then found k=25 (by default) patients who have the lab test results $t$ observed and exhibit the most similar topic mixture to the test patient. We then took the average of lab result values over the k patients as the prediction of the lab result value for the test patient j'. Steps 1-3 were repeated to evaluate every observed lab test in every test patient.
 
 TO-DO: code example
