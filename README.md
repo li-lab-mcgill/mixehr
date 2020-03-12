@@ -105,7 +105,7 @@ To impute missing data in an individual-specific way, we here describe a k-neare
 Finally, we take the average of the EHR code t over these k-nearest neighbour patients as the prediction for the target code t for test patient `j'`. We empirically determined the number of nearest neighbours `k` to be 100.
 
 
-Please download and unzip this file: https://drive.google.com/file/d/1i6FxKSOaagiR0MXMhiHkQtIoyab3eBVE/view?usp=sharing
+Please download and unzip this file: [ehr_code_pred.tar.gz](https://drive.google.com/file/d/1i6FxKSOaagiR0MXMhiHkQtIoyab3eBVE/view?usp=sharing)
 
 Then run the following command:
 
@@ -132,7 +132,7 @@ This is similar to the retrospective EHR code prediction.
 - **Step 3.** We then found k=25 (by default) patients who have the lab test results `t` observed and exhibit the most similar topic mixture to the test patient. We then took the average of lab result values over the `k` patients as the prediction of the lab result value for the test patient `j'`. Steps 1-3 were repeated to evaluate every observed lab test in every test patient.
 
 
-Please download and unzip this file: https://drive.google.com/file/d/1q9O8WL4kkG0fDv_6Ootjs6Q59sD7A1EP/view?usp=sharing
+Please download and unzip this file: [lab_imputation.tar.gz](https://drive.google.com/file/d/1q9O8WL4kkG0fDv_6Ootjs6Q59sD7A1EP/view?usp=sharing)
 
 
 Here the `mimic_data_train_pat_mix_50.csv` that can be generated from using above approach described in **Infer new patient mixture**. The `mimic_data_train_JCVB0_nmar_K50_iter1000*.csv` are the trained model parameters that can be generated from **Training and validation** section.
