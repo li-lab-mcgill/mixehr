@@ -106,13 +106,13 @@ Please download and unzip this file:
 Then run the following command:
 
 ```
-./mixehr --metaFile metainfo.txt --topics 75 \
+./mixehr --metaFile metainfo.txt --topics 75 \ 
 	--trainDataFile train${i}.txt \
-		--imputeTargetsFile impute_target_pheId.txt \
-        --imputePatDataFile test_data.txt \
-        --knn_impute 25 \
-        --output_dir impute_data \
-        --trainedModelPrefix train${i}_JCVB0_nmar_K75_iter200
+	--imputeTargetsFile impute_target_pheId.txt \
+	--imputePatDataFile test_data.txt \
+	--knn_impute 25 \
+	--output_dir impute_data \
+	--trainedModelPrefix train${i}_JCVB0_nmar_K75_iter200
 ```
 
 
