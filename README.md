@@ -165,6 +165,8 @@ After training MixEHR for `k` topics and then inferring the topic mixtures for s
 ```
 import pandas as pd
 import numpy as np
+from keras.models import Sequential
+from keras.layers import Dense, Activation
 
 # getting the topic information for the admissions & patients
 reqd_topics = pd.read_csv("path/to/your/inferred/topic/mixtures",header=None)
@@ -193,7 +195,6 @@ model = Sequential()
 model.add(GRU(128, input_shape=(len(X[0]), 75), return_sequences=True))
 model.add(Dropout(0.2))
 model.add(GRU(256, input_shape=(128, 75), return_sequences=True))
-#model.add(BatchNormalization(128))
 model.add(Dense(num_classes, input_shape=(256,)))
 model.add(Activation('sigmoid'))
 
