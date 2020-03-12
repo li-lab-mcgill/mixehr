@@ -202,3 +202,4 @@ plt.legend()
 # obtain the prediction probabilities of the model
 pred_test = model.predict_proba(x_test)
 ```
+The obtained predicted probabilities (`pred_test`) can be used to measure accuracy against `test_set_y` which are the true labels. 
