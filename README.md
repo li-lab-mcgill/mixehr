@@ -126,7 +126,8 @@ This is similar to the retrospective EHR code prediction.
 - **Step 2.** For a test patient, we masked each of his observed lab test result t and inferred his topic mixture. 
 - **Step 3.** We then found k=25 (by default) patients who have the lab test results $t$ observed and exhibit the most similar topic mixture to the test patient. We then took the average of lab result values over the k patients as the prediction of the lab result value for the test patient j'. Steps 1-3 were repeated to evaluate every observed lab test in every test patient.
 
-Please download and unzip this file: 
+Please download and unzip this file: https://drive.google.com/file/d/1q9O8WL4kkG0fDv_6Ootjs6Q59sD7A1EP/view?usp=sharing
+
 
 Here the `mimic_data_train_pat_mix_50.csv` that can be generated from using above approach described in **Infer new patient mixture**. The `mimic_data_train_JCVB0_nmar_K50_iter1000*.csv` are the trained model parameters that can be generated from **Training and validation** section.
 
