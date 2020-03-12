@@ -110,7 +110,7 @@ TO-DO: example
 
 Please download and unzip this file: 
 
-Then run the following command
+Then run the following command:
 
 ```
 k=50
