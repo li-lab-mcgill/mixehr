@@ -33,9 +33,9 @@ We included the MIMIC-III data. To run mixehr, you will need a meta data file th
 2. pheId: indicate the phenotype ID (e.g., lab test 1, lab test 2, etc)
 3. stateCnt: indicate the number of states for the phenotype. This is designed for lab test at the moment, but will work for other data types with discrete states.
 
-See the example file [mixmimic/mimic_meta.tx](mixmimic/mimic_meta.txt)’ in the folder.
+See the example file [mixmimic/mimic_meta.txt.gz](mixmimic/mimic_meta.txt.gz) in the folder.
 
-The actual EHR data file [mixmimic/mimic_trainData.txt](mixmimic/mimic_trainData.txt) has 5 columns rows:
+The actual EHR data file [mixmimic/mimic_trainData.txt.gz](mixmimic/mimic_trainData.txt.gz) has 5 columns rows:
 
 1. Patient ID
 2. typeId (concurring the meta file above)
@@ -55,15 +55,21 @@ The main training command:
 
 Flags are:
 
--f: ehr data file;
--m: meta file
--i: number of iterations
--k: number of meta-phenotypes
--n: inference method (JCVB0 or SCVB0 for stochastic)
---maxcores: maximum number of CPU cores to use
---outputIntermediates: (whether output intermediate learned parameters for inspection)
+-f: ehr data file 
 
-If you have a test data for producing predictive likelihood, then you can run the same command with added flag '-t $testdata', where the test data contain the same format as the training data but contain one extra column in the end indicating whether the feature is missing (0) or observed (1). See [mixmimic_sim](mixmimic_sim) folder for the simulated data as examples.
+-m: meta file 
+
+-i: number of iterations 
+
+-k: number of meta-phenotypes 
+
+-n: inference method (JCVB0 or SCVB0 for stochastic) 
+
+--maxcores: maximum number of CPU cores to use 
+
+--outputIntermediates: (whether output intermediate learned parameters for inspection)  
+
+If you have a test data for producing predictive likelihood, then you can run the same command with added flag `-t $testdata`, where the test data contain the same format as the training data but contain one extra column in the end indicating whether the feature is missing (0) or observed (1). See [mixmimic_sim](mixmimic_sim) folder for the simulated data as examples.
 
 
 ## Infer new patient mixture
@@ -96,19 +102,13 @@ A heatmap of these features can then be plotted whose intensity is given by the 
 To impute missing data in an individual-specific way, we here describe a k-nearest neighbour approach. The prediction can be divided into 3 steps:
 
 1. Train MixEHR on training set to learn the EHR-code by disease topic matrices **W** across data types and infer the disease topic mixtures ![formula](https://render.githubusercontent.com/render/math?math=\theta^{train}) for each training patient data point;
-<<<<<<< HEAD
-2. To infer the probability of an unknown EHR code `t` for a test patient `j'`, use MixEHR and the learnt disease topic matrices **W** to infer the disease topic mixture <img src="https://render.githubusercontent.com/render/math?math=\theta_{j'}=-1"> for the test patient; 
 
-3. Compare the test patient disease topic mixture ![formula](https://render.githubusercontent.com/render/math?math=\theta_{j'}) with the training patient disease mixtures ![formula](https://render.githubusercontent.com/render/math?math=\theta^{train}) to find the $k$ most similar training patients ![formula](https://render.githubusercontent.com/render/math?math=\mathcal{S}_{j'}). Here the patient-patient similarity matrix is calculated based on the Euclidean distance between their disease topic mixtures:
-
-Finally, we take the average of the EHR code t over these k-nearest neighbour patients as the prediction for the target code `t` for test patient `j'`. We empirically determined the number of nearest neighbours `k` to be 100.
-=======
 2. To infer the probability of an unknown EHR code `t` for a test patient `j'`, use MixEHR and the learnt disease topic matrices **W** to infer the disease topic mixture <img src="https://render.githubusercontent.com/render/math?math=\theta_{j'}"> for the test patient;
 
 3. Compare the test patient disease topic mixture <img src="https://render.githubusercontent.com/render/math?math=\theta_{j'}"> with the training patient disease mixtures <img src="https://render.githubusercontent.com/render/math?math=\theta^{train}"> to find the k most similar training patients <img src="https://render.githubusercontent.com/render/math?math=\mathcal{S}_{j'}">. Here the patient-patient similarity matrix is calculated based on the Euclidean distance between their disease topic mixtures:
 
 Finally, we take the average of the EHR code t over these k-nearest neighbour patients as the prediction for the target code t for test patient `j'`. We empirically determined the number of nearest neighbours `k` to be 100.
->>>>>>> 088e13e27b9df5ff21e351df6f9203fed00135a3
+
 
 Please download and unzip this file: 
 
@@ -129,14 +129,13 @@ The predictions are saved in files `target_phe_pred.csv` under directory `impute
 ## Application 3: Imputing missing lab results:
 ![lab_imputation](images/lab_imputation.png)
 
-<<<<<<< HEAD
-**Workflow to impute lab results.** This is similar to the retrospective EHR code prediction. **Step 1.** We modeled lab tests, lab test results and non-lab EHR data (i.e., ICD, notes, prescription, treatment) to infer the patient topic mixture. **Step 2.** For a test patient, we masked each of his observed lab test result t and inferred his topic mixture. **Step 3.** We then found k=25 (by default) patients who have the lab test results `t` observed and exhibit the most similar topic mixture to the test patient. We then took the average of lab result values over the k patients as the prediction of the lab result value for the test patient j'. Steps 1-3 were repeated to evaluate every observed lab test in every test patient.
-=======
+
+**Workflow to impute lab results.** 
 This is similar to the retrospective EHR code prediction. 
 - **Step 1.** We modeled lab tests, lab test results and non-lab EHR data (i.e., ICD, notes, prescription, treatment) to infer the patient topic mixture. 
 - **Step 2.** For a test patient, we masked each of his observed lab test result t and inferred his topic mixture. 
 - **Step 3.** We then found k=25 (by default) patients who have the lab test results $t$ observed and exhibit the most similar topic mixture to the test patient. We then took the average of lab result values over the k patients as the prediction of the lab result value for the test patient j'. Steps 1-3 were repeated to evaluate every observed lab test in every test patient.
->>>>>>> 088e13e27b9df5ff21e351df6f9203fed00135a3
+
 
 Please download and unzip this file: 
 
