@@ -64,7 +64,7 @@ Flags are:
 --outputIntermediates: (whether output intermediate learned parameters for inspection)  
 '''
 
-If you have a test data for producing predictive likelihood, then you can run the same command with added flag `-t $testdata`, where the test data contain the same format as the training data but contain one extra column in the end indicating whether the feature is missing (0) or observed (1). See [mixmimic_sim](mixmimic_sim) folder for the simulated data as examples.
+If you have a test data for producing predictive likelihood, then you can run the same command with added flag `-t $testdata`, where the test data contain the same format as the training data but contain one extra column in the end indicating whether the feature is missing (0) or observed (1). See [examples](examples) folder for the simulated data as examples.
 
 
 ## Infer new patient mixture
@@ -171,9 +171,15 @@ reqd_topics = pd.read_csv("path/to/your/inferred/topic/mixtures",header=None)
 # normalize the topics
 reqd_topics = pd.DataFrame(normalize(reqd_topics, norm='l1',axis=1))
 
-reqd_pat_id = pd.read_csv("path/to/subject_ids/of/inferred/topic/mixtures",header=None) # this information is mainly used to obtain mortality labels from the MIMIC-III ADMISSIONS.csv file --> train-set_y
+# this information is mainly used to obtain mortality labels from the MIMIC-III ADMISSIONS.csv file
+reqd_pat_id = pd.read_csv("path/to/subject_ids/of/inferred/topic/mixtures",header=None) 
 
-# since we wish to do longitudinal EHR code prediction, we need to obtain the topic mixtures for all admissions for each patient. In order to do so, we need to merge the topic mixtures (reqd_topics) with the patient_ids (reqd_pat_id) and we need to group the topic mixtures by SUBJECT_ID. This can then be split into train_set_x and test_set_x. The corresponding labels are split into train_set_y and test_set_y.
+# since we wish to do longitudinal EHR code prediction, we need to obtain the topic mixtures for all admissions 
+# for each patient. In order to do so, we need to 
+# merge the topic mixtures (reqd_topics) with the patient_ids (reqd_pat_id) 
+# and we need to group the topic mixtures by SUBJECT_ID. 
+# This can then be split into train_set_x and test_set_x. 
+# The corresponding labels are split into train_set_y and test_set_y.
 
 batchsize = 64
 n_batches = int(np.ceil(float(len(train_set_x)) / float(batchsize)))
