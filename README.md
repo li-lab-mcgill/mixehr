@@ -54,7 +54,7 @@ The main training command:
 ```
 
 Flags are:
-'''
+```
 -f: ehr data file 
 -m: meta file 
 -i: number of iterations 
@@ -62,7 +62,7 @@ Flags are:
 -n: inference method (JCVB0 or SCVB0 for stochastic) 
 --maxcores: maximum number of CPU cores to use 
 --outputIntermediates: (whether output intermediate learned parameters for inspection)  
-'''
+```
 
 If you have a test data for producing predictive likelihood, then you can run the same command with added flag `-t $testdata`, where the test data contain the same format as the training data but contain one extra column in the end indicating whether the feature is missing (0) or observed (1). See [examples](examples) folder for the simulated data as examples.
 
