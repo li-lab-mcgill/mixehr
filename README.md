@@ -96,7 +96,8 @@ A heatmap of these features can then be plotted whose intensity is given by the 
 To impute missing data in an individual-specific way, we here describe a k-nearest neighbour approach. The prediction can be divided into 3 steps:
 
 1. Train MixEHR on training set to learn the EHR-code by disease topic matrices **W** across data types and infer the disease topic mixtures $\theta^{train}$ for each training patient data point;
-2. To infer the probability of an unknown EHR code $t$ for a test patient $j'$, use MixEHR and the learnt disease topic matrices $\mf{W}$ to infer the disease topic mixture $\theta_{j'}$ for the test patient;
+2. To infer the probability of an unknown EHR code $t$ for a test patient $j'$, use MixEHR and the learnt disease topic matrices **W** to infer the disease topic mixture <img src="https://render.githubusercontent.com/render/math?math=\theta_{j'}=-1"> for the test patient;
+
 3. Compare the test patient disease topic mixture $\theta_{j'}$ with the training patient disease mixtures $\theta^{train}$ to find the $k$ most similar training patients $\mathcal{S}_{j'}$. Here the patient-patient similarity matrix is calculated based on the Euclidean distance between their disease topic mixtures:
 
 Finally, we take the average of the EHR code t over these k-nearest neighbour patients as the prediction for the target code $t$ for test patient j'. We empirically determined the number of nearest neighbours $k$ to be 100.
