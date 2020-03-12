@@ -89,15 +89,21 @@ A heatmap of these features can then be plotted whose intensity is given by the 
 
 
 ## Application 2: Retrospective Prediction of EHR code:
-TO-DO
 ![heatmap](images/ehr_code_prediction.png)
 
+TO-DO: example
+
+
 ## Application 3: Imputing missing lab results:
-TO-DO
+![heatmap](images/lab_imputation.png)
+
+TO-DO: code example
 
 
 ## Application 4: Prediction of longitudinal EHR code:
-TO-DO
+![heatmap](images/code_prediction.png)
+
+TO-DO: code example
 
 
 
