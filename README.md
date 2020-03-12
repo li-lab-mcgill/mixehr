@@ -163,6 +163,8 @@ To predict dynamic or longitudinal EHR code, we describe a novel pipeline that c
 
 After training MixEHR for `k` topics and then inferring the topic mixtures for some test data, this test data can be further split into train (for RNN) and test (for RNN). Since we wish to do longitudinal EHR code prediction, we need to obtain the topic mixtures for all admissions for each patient. In order to do so, we infer the topic mixtures for each admission. This topic mixture needs to then be merged with the patient_ids. They can then be grouped by SUBJECT_ID. This will give us a list of list of topic mixtures where the outer list is for patients and the inner list contains the mixture probabilities for the admissions for that patient. Since we have the patient_ids, the corresponding labels (diagnosis codes) can be obtained from the `ICD_DIAGNOSIS.csv` file in MIMIC-III. This list of lists can then be split into `train_set_x` and `test_set_x`. The corresponding labels are split into `train_set_y` and `test_set_y`. Since patients have different number of admissions, these datasets are then padded for uniformity. The processed files are available as pickled files in the data download link.
 
+`num_classes` is the total number of unique ICD codes available in MIMIC-III dataset.
+
 ```
 import pickle as pkl
 from keras.models import Sequential
@@ -180,7 +182,7 @@ max_epochs = 70
 
 # RNN code - 2 layer GRU
 model = Sequential()
-model.add(GRU(128, input_shape=(len(X[0]), 75), return_sequences=True))
+model.add(GRU(128, input_shape=(len(test_set_X[0]), 75), return_sequences=True))
 model.add(Dropout(0.2))
 model.add(GRU(256, input_shape=(128, 75), return_sequences=True))
 model.add(Dense(num_classes, input_shape=(256,)))
@@ -200,23 +202,3 @@ plt.legend()
 # obtain the prediction probabilities of the model
 pred_test = model.predict_proba(x_test)
 ```
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
