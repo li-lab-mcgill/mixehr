@@ -114,7 +114,7 @@ TO-DO: code example
 ## Application 4: Prediction of longitudinal EHR code:
 ![heatmap](images/code_prediction.png)
 
-To predict dynamic or longitudinal EHR code, we describe a novel pipeline that combines MixEHR topics with recurrent neural network (RNN) with Gated Recurrent Unit (GRU). We first trained MixEHR on the EHR data for 39,000 patients with single-admission in MIMIC-III. We then used the trained MixEHR to infer topic mixture at each admission for the 7541 patients with multiple admissions. Then we used as input the inferred topic mixture at the current admission (say at time t) to the RNN to autoregressively predict the diagnostic codes at the next admission at time t+1. Here \mxr~uses all of the data types from MIMIC-III.
+To predict dynamic or longitudinal EHR code, we describe a novel pipeline that combines MixEHR topics with recurrent neural network (RNN) with Gated Recurrent Unit (GRU). We first trained MixEHR on the EHR data for 39,000 patients with single-admission in MIMIC-III. We then used the trained MixEHR to infer topic mixture at each admission for the 7541 patients with multiple admissions. Then we used as input the inferred topic mixture at the current admission (say at time t) to the RNN to autoregressively predict the diagnostic codes at the next admission at time t+1. Here \mxr~uses all of the data types from MIMIC-III. More details on the architecture of the neural networks are described in our paper (under peer review).
 
 TO-DO: code example
 
