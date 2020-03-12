@@ -54,20 +54,15 @@ The main training command:
 ```
 
 Flags are:
-
+'''
 -f: ehr data file 
-
 -m: meta file 
-
 -i: number of iterations 
-
 -k: number of meta-phenotypes 
-
 -n: inference method (JCVB0 or SCVB0 for stochastic) 
-
 --maxcores: maximum number of CPU cores to use 
-
 --outputIntermediates: (whether output intermediate learned parameters for inspection)  
+'''
 
 If you have a test data for producing predictive likelihood, then you can run the same command with added flag `-t $testdata`, where the test data contain the same format as the training data but contain one extra column in the end indicating whether the feature is missing (0) or observed (1). See [mixmimic_sim](mixmimic_sim) folder for the simulated data as examples.
 
@@ -105,7 +100,7 @@ To impute missing data in an individual-specific way, we here describe a k-neare
 
 2. To infer the probability of an unknown EHR code `t` for a test patient `j'`, use MixEHR and the learnt disease topic matrices **W** to infer the disease topic mixture <img src="https://render.githubusercontent.com/render/math?math=\theta_{j'}"> for the test patient;
 
-3. Compare the test patient disease topic mixture <img src="https://render.githubusercontent.com/render/math?math=\theta_{j'}"> with the training patient disease mixtures <img src="https://render.githubusercontent.com/render/math?math=\theta^{train}"> to find the k most similar training patients <img src="https://render.githubusercontent.com/render/math?math=\mathcal{S}_{j'}">. Here the patient-patient similarity matrix is calculated based on the Euclidean distance between their disease topic mixtures:
+3. Compare the test patient disease topic mixture <img src="https://render.githubusercontent.com/render/math?math=\theta_{j'}"> with the training patient disease mixtures <img src="https://render.githubusercontent.com/render/math?math=\theta^{train}"> to find the `k` most similar training patients <img src="https://render.githubusercontent.com/render/math?math=\mathcal{S}_{j'}">. Here the patient-patient similarity matrix is calculated based on the Euclidean distance between their disease topic mixtures:
 
 Finally, we take the average of the EHR code t over these k-nearest neighbour patients as the prediction for the target code t for test patient `j'`. We empirically determined the number of nearest neighbours `k` to be 100.
 
@@ -134,7 +129,7 @@ The predictions are saved in files `target_phe_pred.csv` under directory `impute
 This is similar to the retrospective EHR code prediction. 
 - **Step 1.** We modeled lab tests, lab test results and non-lab EHR data (i.e., ICD, notes, prescription, treatment) to infer the patient topic mixture. 
 - **Step 2.** For a test patient, we masked each of his observed lab test result t and inferred his topic mixture. 
-- **Step 3.** We then found k=25 (by default) patients who have the lab test results $t$ observed and exhibit the most similar topic mixture to the test patient. We then took the average of lab result values over the k patients as the prediction of the lab result value for the test patient j'. Steps 1-3 were repeated to evaluate every observed lab test in every test patient.
+- **Step 3.** We then found k=25 (by default) patients who have the lab test results `t` observed and exhibit the most similar topic mixture to the test patient. We then took the average of lab result values over the `k` patients as the prediction of the lab result value for the test patient `j'`. Steps 1-3 were repeated to evaluate every observed lab test in every test patient.
 
 
 Please download and unzip this file: 
@@ -163,9 +158,59 @@ The predictions are saved in files `target_lab_res_pred.csv` under directory `mi
 ## Application 4: Prediction of longitudinal EHR code:
 ![code_prediction](images/code_prediction.png)
 
-To predict dynamic or longitudinal EHR code, we describe a novel pipeline that combines MixEHR topics with recurrent neural network (RNN) with Gated Recurrent Unit (GRU). We first trained MixEHR on the EHR data for 39,000 patients with single-admission in MIMIC-III. We then used the trained MixEHR to infer topic mixture at each admission for the 7541 patients with multiple admissions. Then we used as input the inferred topic mixture at the current admission (say at time t) to the RNN to autoregressively predict the diagnostic codes at the next admission at time t+1. Here \mxr~uses all of the data types from MIMIC-III. More details on the architecture of the neural networks are described in our paper (under peer review).
+To predict dynamic or longitudinal EHR code, we describe a novel pipeline that combines MixEHR topics with recurrent neural network (RNN) with Gated Recurrent Unit (GRU). We first trained MixEHR on the EHR data for 39,000 patients with single-admission in MIMIC-III. We then used the trained MixEHR to infer topic mixture at each admission for the 7541 patients with multiple admissions. Then we used as input the inferred topic mixture at the current admission (say at time `t`) to the RNN to autoregressively predict the diagnostic codes at the next admission at time `t+1`. Here MixEHR uses all of the data types from MIMIC-III. More details on the architecture of the neural networks are described in our paper (under peer review). The lines of code given below may be followed to use the inferred MixEHR mixtures for longitudinal EHR code prediction using an RNN.
 
-TO-DO: code example
+After training MixEHR for `k` topics and then inferring the topic mixtures for some test data, this test data can be further split into train (for RNN) and test (for RNN). 
+
+```
+import pandas as pd
+import numpy as np
+
+# getting the topic information for the admissions & patients
+reqd_topics = pd.read_csv("path/to/your/inferred/topic/mixtures",header=None)
+# normalize the topics
+reqd_topics = pd.DataFrame(normalize(reqd_topics, norm='l1',axis=1))
+
+reqd_pat_id = pd.read_csv("path/to/subject_ids/of/inferred/topic/mixtures",header=None) # this information is mainly used to obtain mortality labels from the MIMIC-III ADMISSIONS.csv file --> train-set_y
+
+# since we wish to do longitudinal EHR code prediction, we need to obtain the topic mixtures for all admissions for each patient. In order to do so, we need to merge the topic mixtures (reqd_topics) with the patient_ids (reqd_pat_id) and we need to group the topic mixtures by SUBJECT_ID. This can then be split into train_set_x and test_set_x. The corresponding labels are split into train_set_y and test_set_y.
+
+batchsize = 64
+n_batches = int(np.ceil(float(len(train_set_x)) / float(batchsize)))
+max_epochs = 70
+
+# since all patients do not have the same number of visits, the training data sets need to be padded with zeros for uniformity in shape. 
+X, y = padMatrix(train_set_x, train_set_y)
+
+# RNN code - 2 layer GRU
+model = Sequential()
+model.add(GRU(128, input_shape=(len(X[0]), 75), return_sequences=True))
+model.add(Dropout(0.2))
+model.add(GRU(256, input_shape=(128, 75), return_sequences=True))
+#model.add(BatchNormalization(128))
+model.add(Dense(num_classes, input_shape=(256,)))
+model.add(Activation('sigmoid'))
+
+sgd = opt.SGD(lr=0.1, decay=1e-6, momentum=0., nesterov=True)
+model.compile(loss='binary_crossentropy', optimizer=sgd, metrics=['accuracy'])
+
+history = model.fit(X, y, batch_size=batchsize, epochs=max_epochs, verbose=2, validation_split=0.2)
+
+# plot loss during training
+plt.title('Loss')
+plt.plot(history.history['loss'], label='train')
+plt.plot(history.history['val_loss'], label='validation')
+plt.legend()
+
+
+# the test sets also need to be padded
+x_test, y_test = padMatrix(test_set_x, test_set_y)
+
+# obtain the prediction probabilities of the model
+pred_test = model.predict_proba(x_test)
+```
+
+
 
 
 
