@@ -96,11 +96,13 @@ TO-DO
 
 
 ## Application 3: Prediction a phenotype of interest using patient topic mixture memberships:
+TO-DO
+
 
 
 
 ## Application 4: Imputing missing lab results:
-
+TO-DO
 
 
 
