@@ -142,6 +142,7 @@ iter=1000
         --trainedModelPrefix lab_imputation/mimic_data_train_JCVB0_nmar_K${k}_iter$iter
 ```        
 
+The predictions are saved in files `target_lab_res_pred.csv` under directory `mimic_data_test_pat_impute_lab_K50`. Rows are admissions or patients and columns are lab tests. Here we predict binary results (normal and abnormal). Therefore, we only need to save the predictions for abnormal (i.e., one column per lab test). It is also easy to predict lab test with more than two result values (e.g., low, normal, high).
 
 ## Application 4: Prediction of longitudinal EHR code:
 ![code_prediction](images/code_prediction.png)
