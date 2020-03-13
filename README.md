@@ -161,7 +161,42 @@ The predictions are saved in files `target_lab_res_pred.csv` under directory `mi
 
 To predict dynamic or longitudinal EHR code, we describe a novel pipeline that combines MixEHR topics with recurrent neural network (RNN) with Gated Recurrent Unit (GRU). We first trained MixEHR on the EHR data for 39,000 patients with single-admission in MIMIC-III. We then used the trained MixEHR to infer topic mixture at each admission for the 7541 patients with multiple admissions. Then we used as input the inferred topic mixture at the current admission (say at time `t`) to the RNN to autoregressively predict the diagnostic codes at the next admission at time `t+1`. Here MixEHR uses all of the data types from MIMIC-III. More details on the architecture of the neural networks are described in our paper (under peer review). The lines of code given below may be followed to use the inferred MixEHR mixtures for longitudinal EHR code prediction using an RNN.
 
-After training MixEHR for `k` topics and then inferring the topic mixtures for some test data, this test data can be further split into train (for RNN) and test (for RNN). Since we wish to do longitudinal EHR code prediction, we need to obtain the topic mixtures for all admissions for each patient. In order to do so, we infer the topic mixtures for each admission. This topic mixture needs to then be merged with the patient_ids. They can then be grouped by SUBJECT_ID. This will give us a list of list of topic mixtures where the outer list is for patients and the inner list contains the mixture probabilities for the admissions for that patient. Since we have the patient_ids, the corresponding labels (diagnosis codes) can be obtained from the `ICD_DIAGNOSIS.csv` file in MIMIC-III. This list of lists can then be split into `train_set_x` and `test_set_x`. The corresponding labels are split into `train_set_y` and `test_set_y`. Since patients have different number of admissions, these datasets are then padded for uniformity. The processed files are available as pickled files in the data download link.
+After training MixEHR for `k` topics and then inferring the topic mixtures for some test data, this test data can be further split into train (for RNN) and test (for RNN). Since we wish to do longitudinal EHR code prediction, we need to obtain the topic mixtures for all admissions for each patient. In order to do so, we infer the topic mixtures for each admission. This topic mixture needs to then be merged with the patient_ids. They can then be grouped by SUBJECT_ID. This will give us a list of list of topic mixtures where the outer list is for patients and the inner list contains the mixture probabilities for the admissions for that patient. Below is an example of 75 topic mixtures for 1 patient with 2 admissions. This array has 2 lists (2 admissions) and each of the inner lists has 75 values which indiciate probabilities of belonging to the 75 topics. 
+
+```
+array([[0.01209019, 0.01998611, 0.01149166, 0.01368793, 0.01413315,
+        0.01054217, 0.01356388, 0.00621338, 0.01544446, 0.00709538,
+        0.01620278, 0.00614183, 0.00771023, 0.0090849 , 0.01131411,
+        0.01241052, 0.0144826 , 0.0146653 , 0.02000644, 0.01497399,
+        0.01340695, 0.01350807, 0.00276752, 0.01641031, 0.01669823,
+        0.01951223, 0.01066794, 0.01707473, 0.0112766 , 0.01031544,
+        0.01553755, 0.0104024 , 0.01191917, 0.00961406, 0.00993082,
+        0.00500289, 0.01012674, 0.00821885, 0.012427  , 0.01166625,
+        0.00727486, 0.01105222, 0.00953794, 0.02064406, 0.01850404,
+        0.01508257, 0.02231016, 0.01588202, 0.01961249, 0.01600174,
+        0.01701199, 0.0125113 , 0.01029791, 0.01124358, 0.01373042,
+        0.01646089, 0.01997158, 0.01029284, 0.01409426, 0.01987322,
+        0.00772018, 0.00979768, 0.00951799, 0.01881881, 0.01652693,
+        0.01186132, 0.0204533 , 0.02348759, 0.00991412, 0.01767057,
+        0.00685997, 0.01342949, 0.01891696, 0.019939  , 0.00597127],
+       [0.00837015, 0.01197824, 0.00547403, 0.00485901, 0.00421585,
+        0.01208326, 0.01063464, 0.0056178 , 0.0100289 , 0.00625341,
+        0.00902622, 0.00731984, 0.01540566, 0.00863343, 0.00705029,
+        0.00974445, 0.00965424, 0.00510858, 0.01167708, 0.01177612,
+        0.00791745, 0.00481467, 0.00108998, 0.01148122, 0.01069184,
+        0.0052892 , 0.01377428, 0.0109204 , 0.00681426, 0.01312267,
+        0.01124336, 0.00797052, 0.00507396, 0.0130879 , 0.00626762,
+        0.00302014, 0.006392  , 0.01025577, 0.01068186, 0.01471757,
+        0.00883061, 0.00896801, 0.01005405, 0.01116567, 0.01019837,
+        0.0084849 , 0.01274504, 0.00740643, 0.00868885, 0.01151242,
+        0.00630296, 0.01335733, 0.01524496, 0.00822703, 0.00809452,
+        0.00584196, 0.00530626, 0.00624914, 0.00632897, 0.24853322,
+        0.00455988, 0.00873241, 0.00783489, 0.00897402, 0.01274341,
+        0.00594328, 0.01528712, 0.08298595, 0.00868986, 0.00975242,
+        0.00825348, 0.0093502 , 0.00620293, 0.02367582, 0.01593576]])
+```
+
+Since we have the patient_ids, the corresponding labels (diagnosis codes) can be obtained from the `ICD_DIAGNOSIS.csv` file in MIMIC-III. This list of lists can then be split into `train_set_x` and `test_set_x`. The corresponding labels are split into `train_set_y` and `test_set_y`. Since patients have different number of admissions, these datasets are then padded for uniformity. The processed files are available as pickled files in the data download link.
 
 `num_classes` is the total number of unique ICD codes available in MIMIC-III dataset.
 
