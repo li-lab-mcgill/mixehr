@@ -22,7 +22,7 @@ mixehr -h
 ```
 This should output:
 ```
-./mixehr -f examples/toydata.txt -m1 examples/toymeta_phe.txt -i 10 -k 10
+./mixehr -f examples/toydata.txt -m examples/toymeta_phe.txt -i 10 -k 10
 ```
 
 See scripts [mixmimic.sh](mixmimic.sh) for training on MIMIC data

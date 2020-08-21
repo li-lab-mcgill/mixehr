@@ -609,7 +609,7 @@ void MixEHR::inferTrainPatMetaphe() {
 
 
 // infer expectation of patients' theta variables only
-void MixEHR::inferNewPatMetaphe(JCVB0* jcvb0, bool output_to_file) {
+void MixEHR::inferNewPatMetaphe(JCVB0* jcvb0) {
 
 	string inputFile;
 
@@ -651,20 +651,19 @@ void MixEHR::inferNewPatMetaphe(JCVB0* jcvb0, bool output_to_file) {
 		patj->lambda.clear();
 	}
 
-	if(output_to_file) {
+	
+	for(vector<Patient>::iterator pat = jcvb0->testPats->begin(); pat != jcvb0->testPats->end(); pat++) {
 
-		for(vector<Patient>::iterator pat = jcvb0->testPats->begin(); pat != jcvb0->testPats->end(); pat++) {
+		// output theta
+		outfile_stream_testPat_theta << pat->metaphe_normalized(0);
 
-			// output theta
-			outfile_stream_testPat_theta << pat->metaphe_normalized(0);
+		for(int k=1; k<numOfTopics; k++) {
 
-			for(int k=1; k<numOfTopics; k++) {
-
-				outfile_stream_testPat_theta << "," << pat->metaphe_normalized(k);
-			}
-			outfile_stream_testPat_theta << endl;
+			outfile_stream_testPat_theta << "," << pat->metaphe_normalized(k);
 		}
+		outfile_stream_testPat_theta << endl;
 	}
+
 
 	outfile_stream_testPat_theta.close();
 }
