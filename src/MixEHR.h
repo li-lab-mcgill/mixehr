@@ -171,7 +171,7 @@ public:
 
 	JCVB0* parseNewData();
 
-	void inferNewPatMetaphe(JCVB0* jcvb0, bool output_to_file=false);
+	void inferNewPatMetaphe(JCVB0* jcvb0);
 
 	void inferTrainPatMetaphe(); // infer and save the train pat mix for imputing test patients
 	void imputeNewPheData(JCVB0* jcvb0, int nearestNeighborK);
