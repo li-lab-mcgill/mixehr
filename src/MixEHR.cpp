@@ -583,6 +583,9 @@ void MixEHR::inferTrainPatMetaphe() {
 
 	size_t lastindex = trainPatMetapheFile.find_last_of(".");
 	string prefix = trainPatMetapheFile.substr(0, lastindex);
+
+	string outfile2 = output_dir + "/" + prefix + "_normalized.csv";
+
 	string outfile_train_patid = output_dir + "/" + prefix + "_patId.csv";
 
 	ofstream outfile_stream_train_patid;
@@ -590,9 +593,13 @@ void MixEHR::inferTrainPatMetaphe() {
 
 	mat train_pat_mix = zeros<mat>(jcvb0->trainPats->size(), numOfTopics);
 
+	mat train_pat_mix_normalized = zeros<mat>(jcvb0->trainPats->size(), numOfTopics);
+
 	int j = 0;
 	for(vector<Patient>::iterator pat = jcvb0->trainPats->begin(); pat != jcvb0->trainPats->end();pat++) {
 		train_pat_mix.row(j) = pat->metaphe;
+		train_pat_mix_normalized.row(j) = pat->metaphe_normalized;
+
 		outfile_stream_train_patid << pat->patId << endl;
 		j++;
 	}
@@ -601,6 +608,8 @@ void MixEHR::inferTrainPatMetaphe() {
 
 	// save train patient mix
 	train_pat_mix.save(outfile, csv_ascii);
+
+	train_pat_mix_normalized.save(outfile2, csv_ascii);
 
 	outfile_stream_train_patid.close();
 }
