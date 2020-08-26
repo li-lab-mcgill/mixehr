@@ -3,6 +3,8 @@
 #include "JCVB0.h"
 #include "PheParams.h"
 
+#include <armadillo>
+
 using namespace std;
 using namespace arma;
 

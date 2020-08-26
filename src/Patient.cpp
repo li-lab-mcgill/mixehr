@@ -1,6 +1,6 @@
-#include <armadillo>
-
 #include "Patient.h"
+
+#include <armadillo>
 
 using namespace arma;
 

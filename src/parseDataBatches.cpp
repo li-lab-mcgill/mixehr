@@ -1,5 +1,7 @@
 #include "MixEHR.h"
 
+#include <armadillo>
+
 using namespace std;
 using namespace arma;
 

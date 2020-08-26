@@ -1,4 +1,4 @@
-gpp := g++-10 -std=c++17 -I/usr/local/boost-1.68.0/include -I/usr/local/include -L/usr/local/lib
+gpp := g++-10 -std=c++17 -I/usr/local/boost-1.68.0/include -I/usr/local/include -L/usr/local/lib/
 all: mixehr
 mixehr: main.o MixEHR.o JCVB0.o SJCVB0.o Patient.o PatientBatch.o parseDataBatches.o parseData.o updateParams.o loglik.o
 	$(gpp) -fopenmp -o mixehr -g main.o MixEHR.o JCVB0.o SJCVB0.o Patient.o PatientBatch.o parseDataBatches.o parseData.o updateParams.o loglik.o -O2 -larmadillo

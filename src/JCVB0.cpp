@@ -2,6 +2,8 @@
 #include "PheParams.h"
 #include "LabParams.h"
 
+#include <armadillo>
+
 using namespace std;
 using namespace arma;
 

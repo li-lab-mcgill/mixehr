@@ -1,5 +1,7 @@
 #include "JCVB0.h"
 
+#include <armadillo>
+
 using namespace std;
 using namespace arma;
 

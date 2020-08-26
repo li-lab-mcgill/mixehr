@@ -1,6 +1,8 @@
 #include "SJCVB0.h"
 #include "PatientBatch.h"
 
+#include <armadillo>
+
 using namespace std;
 using namespace arma;
 

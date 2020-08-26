@@ -1,12 +1,12 @@
 #ifndef PATIENT_H_
 #define PATIENT_H_
 
-#include <map>
-#include <armadillo>
-
 #include "pairkeyhash.h"
 #include "PheParams.h"
 #include "LabParams.h"
+
+#include <map>
+#include <armadillo>
 
 using namespace std;
 using namespace arma;

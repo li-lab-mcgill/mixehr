@@ -1,5 +1,4 @@
 #include <unordered_map>
-#include <algorithm>
 #include <vector>
 #include <list>
 #include <random>
@@ -8,6 +7,7 @@
 #include <iostream>
 #include <string>
 #include <assert.h>
+#include <algorithm>
 
 using namespace std;
 

@@ -8,6 +8,8 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 
+#include <armadillo>
+
 using namespace std;
 using namespace arma;
 
