@@ -76,7 +76,7 @@ After you train the model, you will find a CSV file `mimic_trainData_JCVB0_iter5
 Command to infer disease mixture of new patients:
 ```
 mixehr -m $ehrmeta -n JCVB0 --newPatsData $testdata \
-        --trainedModelPrefix $trainedPrefix -k $K --inferNewPatentMetaphe \
+        --trainedModelPrefix $trainedPrefix -k $K —inferTrainPatientMetaphe \
         --inferPatParams_maxiter 100
 ```
 This gives a D by K matrix file (*_metaphe.csv), which is the normalized probabilities (row sum is one) for D test patients for K meta-phenotypes.
