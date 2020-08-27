@@ -106,7 +106,7 @@ void Patient::assignTargetPhenotypes() {
 			isTestPhe[iter->first] = false;
 		}
 
-//		std::random_shuffle(obsPhe.begin(), obsPhe.end());
+		std::random_shuffle(obsPhe.begin(), obsPhe.end());
 
 		vector<pair<int,int> >::const_iterator first_tarPhe = obsPhe.begin();
 
@@ -169,7 +169,7 @@ void Patient::assignTargetLabTests(bool missingLabOnly, bool observedLabOnly) {
 				isTestLab[iter->first] = false;
 			}
 
-//			std::random_shuffle(obsLab.begin(), obsLab.end());
+			std::random_shuffle(obsLab.begin(), obsLab.end());
 
 			vector<pair<int,int> >::const_iterator first_tarLab = obsLab.begin();
 
