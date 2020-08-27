@@ -11,7 +11,18 @@
 #include <algorithm>
 
 
+#include <armadillo>
+using namespace arma;
+
+#include "test_module.h"
+
 int main()
 {
-   return 0;
+	Test_Module* mymod = new Test_Module(0.1);
+
+	mymod->foo();
+
+	mymod->bar();
+
+	return 0;
 }
