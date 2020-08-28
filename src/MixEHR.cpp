@@ -586,8 +586,6 @@ void MixEHR::inferTrainPatMetaphe() {
 	size_t lastindex = trainPatMetapheFile.find_last_of(".");
 	string prefix = trainPatMetapheFile.substr(0, lastindex);
 
-	string outfile2 = output_dir + "/" + prefix + "_normalized.csv";
-
 	string outfile_train_patid = output_dir + "/" + prefix + "_patId.csv";
 
 	ofstream outfile_stream_train_patid;
@@ -610,6 +608,8 @@ void MixEHR::inferTrainPatMetaphe() {
 
 	// save train patient mix
 	train_pat_mix.save(outfile, csv_ascii);
+
+	string outfile2 = output_dir + "/" + trainPatMetapheFile + "_normalized.csv";
 
 	train_pat_mix_normalized.save(outfile2, csv_ascii);
 
