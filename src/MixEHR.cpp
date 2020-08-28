@@ -591,29 +591,40 @@ void MixEHR::inferTrainPatMetaphe() {
 	ofstream outfile_stream_train_patid;
 	outfile_stream_train_patid.open(outfile_train_patid);
 
-	mat train_pat_mix = zeros<mat>(jcvb0->trainPats->size(), numOfTopics);
 
-	mat train_pat_mix_normalized = zeros<mat>(jcvb0->trainPats->size(), numOfTopics);
+	string outfile = output_dir + "/" + trainPatMetapheFile;
+	ofstream outfile_stream_trainPat_theta;
+	outfile_stream_trainPat_theta.open(outfile);
+
+	string outfile2 = output_dir + "/" + prefix + "_normalized.csv";
+	ofstream outfile_stream_trainPat_theta_normalized;
+	outfile_stream_trainPat_theta.open(outfile2);
+
 
 	int j = 0;
 	for(vector<Patient>::iterator pat = jcvb0->trainPats->begin(); pat != jcvb0->trainPats->end();pat++) {
-		train_pat_mix.row(j) = pat->metaphe;
-		train_pat_mix_normalized.row(j) = pat->metaphe_normalized;
 
 		outfile_stream_train_patid << pat->patId << endl;
+
+		// output theta
+		outfile_stream_trainPat_theta << pat->metaphe(0);
+		outfile_stream_trainPat_theta_normalized << pat->metaphe_normalized(0);
+
+		for(int k=1; k<numOfTopics; k++) {
+
+			outfile_stream_trainPat_theta << "," << pat->metaphe(k);
+			outfile_stream_trainPat_theta_normalized << "," << pat->metaphe_normalized(k);
+		}
+
+		outfile_stream_trainPat_theta << endl;
+		outfile_stream_trainPat_theta_normalized << endl;
+
 		j++;
 	}
 
-	string outfile = output_dir + "/" + trainPatMetapheFile;
-
-	// save train patient mix
-	train_pat_mix.save(outfile, csv_ascii);
-
-	string outfile2 = output_dir + "/" + trainPatMetapheFile + "_normalized.csv";
-
-	train_pat_mix_normalized.save(outfile2, csv_ascii);
-
 	outfile_stream_train_patid.close();
+	outfile_stream_trainPat_theta.close();
+	outfile_stream_trainPat_theta_normalized.close();
 }
 
 
@@ -628,19 +639,6 @@ void MixEHR::inferNewPatMetaphe(JCVB0* jcvb0) {
 		inputFile = newDatafile;
 	else
 		inputFile = trainDataFile;
-
-	size_t lastindex0 = trainedModelPrefix.find_last_of("/");
-	string trainedModel =  trainedModelPrefix.substr(lastindex0+1, trainedModelPrefix.length());
-	size_t lastindex = inputFile.find_last_of(".");
-	string prefix = inputFile.substr(0, lastindex);
-
-	string outfile_testPat_theta = prefix + "_" + trainedModel + "_metaphe.csv";
-
-	cout << "Saving inferred patient metaphe: " << outfile_testPat_theta << endl;
-
-	ofstream outfile_stream_testPat_theta;
-
-	outfile_stream_testPat_theta.open(outfile_testPat_theta);
 
 	int j = 0;
 
@@ -662,6 +660,18 @@ void MixEHR::inferNewPatMetaphe(JCVB0* jcvb0) {
 		patj->lambda.clear();
 	}
 
+	size_t lastindex0 = trainedModelPrefix.find_last_of("/");
+	string trainedModel =  trainedModelPrefix.substr(lastindex0+1, trainedModelPrefix.length());
+	size_t lastindex = inputFile.find_last_of(".");
+	string prefix = inputFile.substr(0, lastindex);
+
+	string outfile_testPat_theta = prefix + "_" + trainedModel + "_metaphe.csv";
+
+	cout << "Saving inferred patient metaphe: " << outfile_testPat_theta << endl;
+
+	ofstream outfile_stream_testPat_theta;
+
+	outfile_stream_testPat_theta.open(outfile_testPat_theta);
 	
 	for(vector<Patient>::iterator pat = jcvb0->testPats->begin(); pat != jcvb0->testPats->end(); pat++) {
 
@@ -674,7 +684,6 @@ void MixEHR::inferNewPatMetaphe(JCVB0* jcvb0) {
 		}
 		outfile_stream_testPat_theta << endl;
 	}
-
 
 	outfile_stream_testPat_theta.close();
 }
