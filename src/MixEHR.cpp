@@ -600,9 +600,7 @@ void MixEHR::inferTrainPatMetaphe() {
 	ofstream outfile_stream_trainPat_theta_normalized;
 	outfile_stream_trainPat_theta_normalized.open(outfile2);
 
-
-	int j = 0;
-	for(vector<Patient>::iterator pat = jcvb0->trainPats->begin(); pat != jcvb0->trainPats->end();pat++) {
+	for(vector<Patient>::iterator pat = jcvb0->trainPats->begin(); pat != jcvb0->trainPats->end(); pat++) {
 
 		outfile_stream_train_patid << pat->patId << endl;
 
@@ -618,8 +616,6 @@ void MixEHR::inferTrainPatMetaphe() {
 
 		outfile_stream_trainPat_theta << endl;
 		outfile_stream_trainPat_theta_normalized << endl;
-
-		j++;
 	}
 
 	outfile_stream_train_patid.close();
