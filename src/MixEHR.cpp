@@ -592,11 +592,11 @@ void MixEHR::inferTrainPatMetaphe() {
 	outfile_stream_train_patid.open(outfile_train_patid);
 
 
-	string outfile = output_dir + "/" + trainPatMetapheFile;
+	string outfile = trainPatMetapheFile;
 	ofstream outfile_stream_trainPat_theta;
 	outfile_stream_trainPat_theta.open(outfile);
 
-	string outfile2 = output_dir + "/" + prefix + "_normalized.csv";
+	string outfile2 = prefix + "_normalized.csv";
 	ofstream outfile_stream_trainPat_theta_normalized;
 	outfile_stream_trainPat_theta_normalized.open(outfile2);
 
