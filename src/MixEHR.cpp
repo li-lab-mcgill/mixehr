@@ -600,6 +600,9 @@ void MixEHR::inferTrainPatMetaphe() {
 	ofstream outfile_stream_trainPat_theta_normalized;
 	outfile_stream_trainPat_theta_normalized.open(outfile2);
 
+	cout << "Saving inferred patient metaphe: " << outfile << endl;
+	cout << "Saving inferred patient metaphe normalized: " << outfile2 << endl;
+
 	for(vector<Patient>::iterator pat = jcvb0->trainPats->begin(); pat != jcvb0->trainPats->end(); pat++) {
 
 		outfile_stream_train_patid << pat->patId << endl;
